@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@color/white"
+	android:gravity="center_horizontal">
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:padding="6dip" android:layout_height="?android:attr/listPreferredItemHeight"
+	    android:background="@color/fb_blue">
+	    <ImageView
+	        android:id="@+id/user_pic"        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginRight="6dip"/>
+	    <TextView
+	        android:id="@+id/txt"
+	        android:textColor="@color/white"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"        
+	        android:layout_toRightOf="@id/user_pic"/>
+	    <com.wishlist.LoginButton
+	        android:id="@+id/login"
+	        android:src="@drawable/login_button"      
+	        android:layout_toRightOf="@id/user_pic"
+	        android:layout_below="@id/txt"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+	</RelativeLayout>
+	<Spinner 
+		android:id="@+id/wishlist_spinner"
+		android:prompt="@string/select_wishlist"
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent" 
+		android:layout_gravity="left"/>
+   	<EditText 
+   		android:hint="@string/enter_name"
+   		android:id="@+id/product_name" 
+   		android:layout_width="fill_parent" 
+   		android:layout_height="wrap_content"/>
+	<ImageView 
+   		android:id="@+id/itemPhoto"
+   		android:clickable="true"
+   		android:layout_width="185dp"
+   		android:layout_height="185dp"/>
+	 <Spinner 
+		android:id="@+id/location"
+		android:prompt="@string/select_location"
+		android:layout_height="50dp" 
+		android:layout_width="fill_parent" 
+		android:layout_gravity="left"/>
+	 <Button 
+	 	android:text="@string/add_to_timeline"
+	 	android:id="@+id/timeline"
+	 	android:layout_width="wrap_content" 
+	 	android:layout_height="wrap_content" 
+	 	android:background="@color/fb_blue"
+	 	android:textColor="@color/white"
+	    android:padding="6dp"/>
+</LinearLayout>

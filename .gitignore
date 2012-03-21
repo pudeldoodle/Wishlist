@@ -1,0 +1,10 @@
+Android/bin/
+Android/gen/
+iOS/Wishlist/build/
+iOS/Wishlist/Wishlist.xcodeproj/*.pbxuser
+iOS/Wishlist/Wishlist.xcodeproj/*.mode*
+iOS/Wishlist/Wishlist.xcodeproj/xcuserdata*
+iOS/Wishlist/Wishlist.xcodeproj/project.xcworkspace
+*~
+*#
+.arcconfig

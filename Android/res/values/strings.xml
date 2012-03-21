@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wishlist</string>
+    <string name="select_wishlist">Select Wishlist:</string>
+    <string-array name="wishlist_array">
+	    <item>Birthday Wishlist</item>
+	    <item>Holiday Wishlist</item>
+	    <item>Wedding Wishlist</item>
+	</string-array>
+	<string-array name="login_for_places">
+    	<item>"Login for nearby places"</item>
+	</string-array>
+    <string-array name="init_location_array">
+    	<item>"Fetching Location..."</item>
+	</string-array>
+    <string-array name="fetch_places_array">
+    	<item>"Fetching nearby places..."</item>
+	</string-array>
+    <string name="add_to_timeline">Add to Timeline</string>
+    <string name="select_wishlist">Select Wishlist</string>
+    <string name="select_location">Select Location</string>
+    <string name="adding_to_timeline">Adding to timeline...</string>
+    <string name="uploading_photo">Uploading photo...</string>
+    <string name="enter_name">Enter Product Name</string>
+    <string name="ok">OK</string>
+    <string name="must_login">You must first login!</string>
+    <string name="enter_product_name">You must enter product name</string>
+    <string name="take_product_photo">You must take product photo</string>
+    <string name="no_places_fetched">No nearby places fetched</string>
+    <string name="error_getting_image">Image could not be fetched</string>
+    <string name="no_image_selected">No image selected for upload</string>
+    <string name="error_uploading_photo">Product image could not be uploaded. Please try again.</string>
+    <string name="added_to_timeline">%1$s added to timeline</string>
+    <string name="error">Error</string>
+</resources>

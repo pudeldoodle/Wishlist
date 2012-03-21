@@ -1,0 +1,275 @@
+**License**
+========================
+
+Copyright 2012 Facebook, Inc.
+
+You are hereby granted a non-exclusive, worldwide, royalty-free license to
+use, copy, modify, and distribute this software in source code or binary
+form for use in connection with the web services and APIs provided by
+Facebook.
+
+As with any software that integrates with the Facebook platform, your use
+of this software is subject to the [Facebook Developer Principles and
+Policies](http://developers.facebook.com/policy/). This copyright notice
+shall be included in all copies or substantial portions of the software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+**Wishlist Application**
+========================
+
+This sample application demonstrates how to build an Android and iOS app to publish custom Open Graph actions. The sample also includes a server-side component to host the Open Graph objects.
+
+Users of the app can take a photo of a product, add the product to a wishlist, then share the story with friends. The product gets stored on the backend server before publishing the story to Facebook.
+
+This README will walk you through the following:
+
+* Getting Started
+* Creating your Facebook app
+* Setting up your Open Graph action types, object types, and timeline units
+* Setting up the the backend server using Heroku Cloud Services
+* Installing the Android app
+* Installing the iOS app
+
+**Getting Started**
+===================
+
+Your install package should have the following files:
+
+* Backend Server (Server)
+  * photo_upload.php
+  * product.php
+  * wishlists/birthday.php
+  * wishlists/holiday.php
+  * wishlists/wedding.php
+  * images
+ 
+* Android Project (Android)
+  * Android project containing the app
+
+* iOS Project (iOS)
+  * Xcode project containing the app
+
+To get the sample code do the following:
+
+* Install [Git](http://git-scm.com/).
+
+* Pull the samples package from GitHub:
+
+    git clone git://github.com/fbsamples/Wishlist
+
+**Creating your Facebook app**
+==============================
+
+First set up a Facebook app using the Developer app:
+
+* Create a new [Facebook app](https://developers.facebook.com/apps)
+* Enter the `App Namespace` when creating your app. You can choose a simple string to identify your app, such as ''wishlist'', but it must be unique.
+
+**Setting up your Open Graph action types, object types, and timeline units**
+=============================================================================
+
+You can now set up the application's action types, object types, and timeline units: 
+
+* Go to your app on the Facebook [Dev app](https://developers.facebook.com/apps)
+
+* Go to Open Graph settings
+
+* In the Getting Started step, enter "add to" for the action, and "wishlist" for the object.
+
+* Edit your Action Type
+  * Modify _Past Tense_ to "added to a"
+  * Modify _Plural Past Tense_ to "added to their"
+  * Modify _Present Tense_ to "is adding to a"
+  * Modify _Plural Present Tense_ to "are adding to their"
+  * Save changes and continue
+
+* Edit your Object Type
+  * Under _Object Properties_ click on "Add Another Property". Enter "Wishlist ID" in the name field. Select "Integer" for the type field.
+  * Save changes and continue
+
+* Create an Aggregation (we will add this later after defining the Product object)
+  * Save changes and continue
+
+* You should now be in the Dashboard (summary) view. Click on "Create New Object Type"
+  * Name the object "product"
+  * You should not need to make any changes to the default object settings.
+  * Save your changes
+
+* Edit your "Add To" Action Type once more to add a reference to the "product" object:
+  * Under _Action Properties_ click on "Add Another Property". Enter "Product" in the name field. Select "Product" for the type field.
+
+* Now create the timeline units:
+  * Click on "Create New Aggregation"
+  * _Data to Display_ select "Product"
+  * _Sort By_ select "Most Recent Product" (if you cannot select this option, keep the default)
+  * _Aggregation Title_ enter "Added on Wishlist"
+  * _Caption Lines_ first line, enter "{wishlist.title}"
+  * _Caption Lines_ first line, enter {start_time | date("fb_relative")} at {place}
+
+  * Click on "Create New Aggregation"
+  * _Data to Display_ select "Product"
+  * _Layout Style_ select the Gallery option
+  * _Sort By_ select "Most Recent Product" (if you cannot select this option, keep the default)
+  * _Aggregation Title_ enter "Birthday Wishlist"
+  * _Caption Lines_ first line, enter "{product.title} at {place}"
+  * Click the Advanced link
+  * Click "Add Filter"
+  * Select wishlist.wishlist_id for the filter parameter and 1 as the value to filter on.
+
+  * Click on "Create New Aggregation"
+  * _Data to Display_ select "Product"
+  * _Layout Style_ select the Gallery option
+  * _Sort By_ select "Most Recent Product"
+  * _Aggregation Title_ enter "Holiday Wishlist"
+  * _Caption Lines_ first line, enter "{product.title} at {place}"
+  * Click the Advanced link
+  * Click "Add Filter"
+  * Select wishlist.wishlist_id for the filter parameter and 2 as the value to filter on.
+
+**Setting up the the backend server using Heroku Cloud Services**
+=================================================================
+
+* Go to your app on the Facebook [Dev app](https://developers.facebook.com/apps)
+
+* Go to Basic settings
+
+* Under the Cloud Services section click on "Get Started" and follow the instructions for setting up your server-side. Note the Cloud Services Hosting URL that is generated; you will enter this in a later step.
+
+* Edit your [Dev app](https://developers.facebook.com/apps) settings to add the Heroku information:
+  * Under Basic settings modify _App Domain_ to add your Heroku host domain
+
+* Ensure that you have installed the [Heroku Toolbelt](http://devcenter.heroku.com/articles/facebook#heroku_account_and_tools_setup) and followed the setup instructions in the email.
+
+* Fetch your [server app code](http://devcenter.heroku.com/articles/facebook#editing_your_app)
+
+* Add the Wishlist server-side PHP files to your Heroku app:
+  * Copy the Server/* files to your Heroku local app main directory
+  * For the files product.php and wishlists/*.php wherever you find them, replace:
+     * `YOUR_APP_ID` with your app ID
+     * `YOUR_HEROKU_SERVER_URL` with your Heroku host URL
+     * `YOUR_APP_NAMESPACE` with the namespace for your Facebook app
+  * Commit and push the local additions up to Heroku
+    * git add .
+    * git commit -am "wishlist"
+    * git push heroku master
+
+
+**Installing the Android app**
+==============================
+
+For more information on how to set up an Android app, see the [Android Tutorial](https://developers.facebook.com/docs/guides/mobile/android/)
+
+1. Launch Eclipse
+
+2. Ensure you have installed the Android plugin.
+
+3. Create Facebook SDK Project - follow the Step-2 instructions in the [Android Tutorial](https://developers.facebook.com/docs/guides/mobile/android/).
+
+4. Create the Wishlist Project :
+    4. Select __File__ -> __New__ -> __Project__, choose __Android Project__, and then click __Next__.
+    4. Select "Create project from existing source".
+    4. Choose  Wishlist folder. You should see the project properties populated.
+    4. Click Finish to continue.
+
+5. Add reference to the Facebook SDK - follow the Step-3 instructions in the [Android Tutorial](https://developers.facebook.com/docs/guides/mobile/android/).
+
+6. Download [Apache HttpComponents](http://hc.apache.org/downloads.cgi) and add a reference to the httpmime-4.1.2.jar file: 
+    6. Go to Project->Properties->Java Build Path->Libraries->Add External Jars->Select httpmime-4.1.2.jar->OK
+
+7. Follow the //TODO in the Wishslist.java and add:
+    7. add the app id in the Wishlist.java->APP_ID
+    7. add the Heroku server URL to the Wishlist.java->HOST_SERVER_URL
+    7. add Wishlist Object URLs to the Wishlist.java->WISHLIST_OBJECTS_URL
+    7 in the addToTimeline() function, add your namespace:{action} in the Utility.mAsyncRunner.request("me/{namespace}:{add_to_action}", wishlistParams, "POST", new addToTimelineListener(), null);
+
+8. Add app keyhash to the app setting, follow the Step-4 in the [Android Tutorial](https://developers.facebook.com/docs/guides/mobile/android/).
+
+9. And you are done and ready to compile the project:
+    9. From the Project menu, select "Build Project".
+
+10. Hopefully the project will compile fine. Next run the app on the emulator or on the phone (See http://developer.android.com/guide/developing/eclipse-adt.html#RunConfig for more details.)
+    10. If you plan to run on the emulator, ensure you have created an Android Virtual Device (AVD):
+        10. Go to Window -> Android SDK and AVD Manager -> Click New
+        10. Provide a Name (AVD 2.3 e.g.) and choose the Target (Android 2.3 if available).
+        10. Click 'Create AVD' at the bottom and that should create an AVD which you can run the app on described  next.
+    10. Go to Run->Run Configurations->Android Application->create a new run configuration by clicking the icon with '+' button on it.
+    10. Name it 'Wishlist'
+    10. Under the Project, Browse and choose Wishlist
+    10. Go to Target tab -> Choose manual if you wish to run on the phone, else choose Automatic and select an AVD created in step 10.1
+    10. Click Run and your 'Hackbook for Android' app should be up and running.
+
+**Installing the Facebook Android app**
+
+You will need to have the Facebook Android application on the handset or the emulator to test Single Sign On. The SDK includes a developer release of the Facebook application that can be side-loaded for testing purposes. On an actual device, you can just download the latest version of the app from the Android Market, but on the emulator you will have to install it yourself:
+
+      adb install FBAndroid.apk
+
+**Simulating location on emulator.**
+
+* You can simulate the location on simulator by
+  * Launch the simulator
+  * Login the user
+  * Open command prompt and type 'telnet localhost 5554'
+  * Type geo fix -122.152004 37.416033 which is Facebook HQ lat lon
+  * This sets the emulator location and will then fetch nearby places.
+
+**Quick Code Overview**
+
+* The main class which does the layout, login, and posting the COG story.
+  * initFacebook() - initialize the facebook object, restore session if available and display the login button.
+  * mAddtoTimeline.setOnClickListener(new OnClickListener() - this activates the photo upload and publishing the COG story
+  * uploadPhoto() - upload the product image in a new thread at HOST_SERVER_URL + HOST_PHOTO_UPLOAD_URI and on successful upload, triggers the addToTimeline()
+  * addToTimeline() - publish a COG story using the Graph API
+  * onActivityResult()  - called on successful authentication and after user pick a photo from the media gallery.
+  * FbAPIsAuthListener and FbAPIsLogoutListener() - authentication listeners.
+  * requestUserData() - get user's name, profile pic and fetch his current location via fetchCurrentLocation()
+  * fetchPlaces() - fetch nearby places
+
+
+**Installing the iOS app**
+==========================
+
+**Configuring the app**
+
+1. Using Xcode open up Wishlist/Wishlist.xcodeproj
+
+1. Set up the Facebook iOS SDK:
+   1. Get the latest Facebook iOS SDK from GitHub: git clone git://github.com/facebook/facebook-ios-sdk.git
+   2. You should see a folder called facebook-ios-sdk/src that contains the SDK
+   3. Drag the src folder to the Wishlist project. You may choose to copy the items over into your project.
+
+2. Set up your App ID:
+    1. Open up AppDelegate.m, add your app ID by changing:
+
+             NSString * const kAppId = nil;
+
+     to:
+
+             NSString * const kAppId = @"YOUR_APP_ID";
+
+   1. Open up Wishlist/Supporting Files/Wishlist-Info.plist
+   1. Navigate to URL types > Item 0 > URL Schemes > Item 0
+   1. Replace fbYOUR_APP_ID with "fb" followed by your app ID, e.g. fb123456 if your app ID is 123456
+
+3. Set up your Bundle Identifier
+   1. Open up Wishlist/Supporting Files/Wishlist-Info.plist
+   1. Edit the Bundle identifier information and make sure it matches the settings in the Facebook Dev App
+
+4. Set up to publish to your own backend server (assumption here is you set up a Heroku server and copied over the sample files)
+   1. Open up HomeViewController.m
+   1. Replace the kBackEndServer string with your back-end server URL
+   1. In the apiGraphAddToWishlist method, replace: `samplewishlist:add_to` with: `YOUR_APP_NAMESPACE:add_to` where YOUR_APP_NAMESPACE corresponds to the value defined earlier in the Facebook dev app.
+
+**Configuring Facebook distribution**
+
+* Edit your [Dev app](https://developers.facebook.com/apps) Basic Settings to add the [Native iOS App settings](https://developers.facebook.com/docs/mobile/ios/build/#linktoapp):
+  * Modify _iPhone App Store ID_ to add any valid iTunes app ID
+  * Enable the _Configured for iOS SSO_ setting
+
